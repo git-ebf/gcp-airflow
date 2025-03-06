@@ -1,13 +1,8 @@
 steps:
-  # Carrega variáveis de ambiente do arquivo .env
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        source .env
-        gcloud builds submit --substitutions=_COMPOSER_BUCKET=$COMPOSER_BUCKET
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'git@github.com:usuario/repositorio.git']
 
-  # Copia automaticamente arquivos DAGs para o bucket do Composer
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['-m', 'rsync', '-r', 'dags/', 'gs://$COMPOSER_BUCKET/dags/']
+serviceAccount: 'build-service-account@seu-projeto.iam.gserviceaccount.com'
+
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
