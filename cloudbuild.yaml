@@ -1,0 +1,13 @@
+steps:
+  # Carrega variáveis de ambiente do arquivo .env
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        source .env
+        gcloud builds submit --substitutions=_COMPOSER_BUCKET=$COMPOSER_BUCKET
+
+  # Copia automaticamente arquivos DAGs para o bucket do Composer
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'rsync', '-r', 'dags/', 'gs://$COMPOSER_BUCKET/dags/']
