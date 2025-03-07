@@ -1,6 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'git@github.com:git-ebf/gcp-airflow.git']
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m', 'rsync', '-r', 'dags/', 'gs://us-central1-homolog-cc7f8d81-bucket/dags']
