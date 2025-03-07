@@ -1,11 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'git@github.com:${_GITHUB_USER}/${_REPO}.git']
+  args: ['clone', 'git@github.com:git-ebf/gcp-airflow.git']
 
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'rsync', '-r', 'dags/', '${_COMPOSER_BUCKET}']
+  args: ['-m', 'rsync', '-r', 'dags/', 'gs://us-central1-homolog-cc7f8d81-bucket/dags']
 
-serviceAccount: '${_SERVICE_ACCOUNT}'
+serviceAccount: 'bigdata-demo01@appspot.gserviceaccount.com'
 
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
