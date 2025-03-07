@@ -1,8 +1,12 @@
 steps:
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'git@github.com:usuario/repositorio.git']
+  args: ['clone', 'git@github.com:${_GITHUB_USER}/${_REPO}.git']
 
-serviceAccount: 'build-service-account@seu-projeto.iam.gserviceaccount.com'
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['-m', 'rsync', '-r', 'dags/', '${_COMPOSER_BUCKET}']
+
+serviceAccount: '${_SERVICE_ACCOUNT}'
 
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+
